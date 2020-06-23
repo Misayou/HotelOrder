@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>地图找房</title>
+
+    <!--======== All Stylesheet =========-->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/linearicons.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/responsive.css" rel="stylesheet">
+    <link rel="stylesheet" href="../lib/layui/css/layui.css">
+</head>
+
+<body>
+<!-- Header -->
+<header class="header">
+    <div class="top-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-xs-7">
+                    <ul class="list-inline social-icon">
+                        <li><i class=" fa fa-linkedin"></i></li>
+                        <li><i class=" fa fa-skype"></i></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-xs-5">
+                    <ul class="list-inline security">
+                        <li title="Login"><i class=" lnr lnr-lock"></i><a href="login.html" style="color: #b9def0">登录</a></li>
+                        <li title="Register"><i class=" lnr lnr-pencil"></i><a href="register.html" style="color: #b9def0">注册</a></li>
+                        <li title="Wishlist"><i class=" lnr lnr-heart"></i><a href="/html/user/userindex.html" style="color: #b9def0">个人</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="middle-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-xs-6">
+                    <div><a class="site-title" href="index.html">连锁酒店辅助订购系统</a></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-header">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <nav class="navbar navbar-default">
+                    <div class="container">
+
+                        <div class="collapse navbar-collapse" id="menu-id">
+                            <ul class="nav navbar-nav">
+
+                                <li><a href="/html/index.html">首页</a></li>
+                                <li><a href="/html/hotel.html">全部房型</a></li>
+                                <li><a href="#">地图找店</a></li>
+                            </ul>
+                            <div class="nav-search">
+                                <form class="navbar-form navbar-right" role="search">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="请输入你的归宿"><i class="fa fa-search search-btn"></i>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+<div class="row" style="height: 600px">
+    <div class="col-md-8 col-md-offset-2" id="mapView" style="background-color: cornflowerblue;height: 500px">
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<!-- add Two -->
+<section class="ad-2">
+    <div class="over-color">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 col-xs-12 text-center">
+                    <small>lives</small>
+                    <h2>Life can like many people, but love, only one.</h2>
+                    <p>一生中可以喜欢很多人，但心疼的，只有一个。</p>
+                    <strong>所以欢迎来睡</strong>
+                    <div><a class="btn btn-default">抢先预定</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!-- Middle footer -->
+<section class="middle-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8 col-xs-12 text-center">
+                <div>
+                    <a class="site-title" href="index.html">安<span>宁</span></a>
+                    <p class="m-f-p">这里。就是家。就是我们。在这上面有你曾经听说过的每一个人  曾经活着的  曾经死去的每一个人</p>
+                </div>
+
+                <ul class="list-inline address">
+                    <li><i class=" lnr lnr-home"></i>西南石油大学</li>
+                    <li><i class=" lnr lnr-envelope"></i>swpu@163.com</li>
+                    <li><i class=" lnr lnr-phone-handset"></i>96005900</li>
+                    <li><a href="/html/admin/admin.html">管理员界面</a></li>
+                </ul>
+
+                <!--a type="button" class="btn btn-default" data-toggle="modal" data-target=".popup">Small modal</a-->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- bottom footer -->
+<footer class="bottom-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6 col-xs-12 text-center">
+                <p>西南石油大学倾情奉献</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+
+<!--======== All Javascript =========-->
+<script src="../js/jquery-2.1.1.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../lib/layui/layui.js">  </script>
+<script src="../js/common.js"></script>
+<script  src="https://webapi.amap.com/maps?v=1.4.15&key=2cafb4f6239afd8ab08f9409f65042cd"></script>
+
+<!--脚本-->
+<script>
+
+    var map = new AMap.Map('mapView', {
+        zoom:11,//级别
+        resizeEnable: true, //启动时自动地位到当前城市
+        viewMode:'3D',//使用3D视图
+        mapStyle: 'amap://styles/macaron' //设置地图的样式
+    });
+
+    AMap.plugin([
+        'AMap.ToolBar',
+        'AMap.Scale',
+        'AMap.OverView'
+
+    ], function(){
+        // 在图面添加工具条控件，工具条控件集成了缩放、平移、定位等功能按钮在内的组合控件
+        map.addControl(new AMap.ToolBar());
+
+        // 在图面添加比例尺控件，展示地图在当前层级和纬度下的比例尺
+        map.addControl(new AMap.Scale());
+
+        // 在图面添加鹰眼控件，在地图右下角显示地图的缩略图
+        map.addControl(new AMap.OverView({isOpen:true}));
+
+    });
+
+    // 创建一个 Marker 实例：
+    var marker01 = new AMap.Marker({
+        position: new AMap.LngLat(104.00943,30.664384),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+        title: '成都一分店'
+    });
+    // 创建一个 Marker 实例：
+    var marker02 = new AMap.Marker({
+        position: new AMap.LngLat(104.175598,30.68092),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+        title: '成都二分店'
+    });
+    // 创建一个 Marker 实例：
+    var marker03 = new AMap.Marker({
+        position: new AMap.LngLat(103.894074,30.545003),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+        title: '成都三分店'
+    });
+    // 创建一个 Marker 实例：
+    var marker04 = new AMap.Marker({
+        position: new AMap.LngLat(121.458723,31.243612),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+        title: '上海四分店'
+    });
+
+    // 将创建的点标记添加到已有的地图实例：
+    map.add(marker01);
+    map.add(marker02);
+    map.add(marker03);
+    map.add(marker04);
+
+
+
+
+</script>
+</html>

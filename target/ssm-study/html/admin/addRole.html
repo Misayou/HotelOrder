@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>创建角色</title>
+    <link rel="stylesheet" href="../../lib/layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/admin.css">
+</head>
+<body>
+
+<div class="layui-layout-body" style="background-color: #f2f2f2;">
+
+    <div class="layui-card layui-col-lg8 layui-col-lg-offset2">
+        <div class="layui-card-header"></div>
+        <div class="layui-card-body">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">角色名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="roleName">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">角色描述</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入内容" class="layui-textarea" id="roleMsg"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" onclick="addRole()">创建角色</button>
+                        <button class="layui-btn layui-btn-primary"  onclick="clearInput()">重新填写</button>
+                    </div>
+                </div>
+
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<script src="../../lib/layui/layui.js"></script>
+<script src="../../lib/jquery/jquery.js"></script>
+<script src="../../js/common.js"></script>
+
+
+<script>
+    layui.use(['element', 'form'], function () {
+        var element = layui.element;
+        var form = layui.form;
+
+    });
+
+    /**
+     * 添加角色
+     */
+    function addRole() {
+        var roleName=$('#roleName').val();
+        var roleMsg=$('#roleMsg').val();
+
+        if (roleMsg===''||roleMsg===''){
+            layer.msg('请确保表单的完整性');
+            return;
+        }
+
+        $.ajax({
+            type:"post",
+            url:base_url+'/role/addRole',
+            data:{
+                'roleName':roleName,
+                'roleMsg':roleMsg
+            },
+            success:function (d) {
+                if(d=="1"){
+                    layer.msg('创建成功');
+                }
+
+            }
+        })
+
+
+    }
+
+    function clearInput() {
+        $('#roleName').text('');
+        $('#roleMsg').text('');
+    }
+
+
+
+</script>
+</body>
+</html>

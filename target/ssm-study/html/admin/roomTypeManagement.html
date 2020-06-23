@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>客房类型管理</title>
+    <link rel="stylesheet" href="../../lib/layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/admin.css">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.css">
+</head>
+
+<body class="layui-layout-body" style="background-color: #f2f2f2">
+<div class="layui-card admin-header">
+    <div class="layui-breadcrumb" lay-fiter="breadcrumb" style="visibility: visible">
+        <a href="#">主页</a>
+        <span lay-separator="-"></span>
+        <a href="#">客房类型管理</a>
+    </div>
+</div>
+<div class="layui-fluid" style="margin-top:10px">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header ">客房类型管理</div>
+
+                <div class="layui-card-body">
+                    <div>
+                        新建类型：
+                        <div class="layui-inline">
+                            <input class="layui-input"  id="roomType" autocomplete="off" style="width: 140px" placeholder="房间类型">
+                        </div>
+                        <div class="layui-inline">
+                            <select name="bran"   style="width: 160px" id="selectBox"  class="form-control">
+                                <option value="0">请选择</option>
+                            </select>
+                        </div>
+                        <div class="layui-inline">
+                            <input class="layui-input"  id="numOfPeo" autocomplete="off"  style="width: 80px" placeholder="房间人数">
+                        </div>
+                        <div class="layui-inline">
+                            <input class="layui-input"  id="price" autocomplete="off" style="width: 80px" placeholder="价格">
+                        </div>
+                        <div class="layui-inline">
+                            <textarea name="desc" placeholder="描述信息" id="desc" class="layui-textarea" style="width: 220px" id="mes" ></textarea>
+
+                        </div>
+                        <button type="button" class="layui-btn" id="uploader">
+                            <i class="layui-icon">&#xe67c;</i>上传图片
+                        </button>
+                        <button class="layui-btn" onclick="createRoomType()">新建</button>
+                    </div>
+                    <div class="layui-col-lg12 ">
+                        <table class="layui-hide" id="table" lay-filter="test"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--复选框模板-->
+<script type="text/html" id="hotelSelectTpl">
+
+    {{#  layui.each(d.hotelList, function(index, item){ }}
+    <option value="{{item.id}}">{{item.subbranch}}</option>
+    {{#  });
+    }}
+
+</script>
+<script type="text/html" id="checkboxTpl">
+    <input type="checkbox" name="lock" value="{{d.id}}" title="推荐" lay-filter="lockDemo" {{ d.isrecommend == '1' ? 'checked' : '' }} }}>
+</script>
+
+<script src="../../lib/layui/layui.js"></script>
+<script src="../../lib/jquery/jquery.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>
+
+<!--表格处理代码-->
+<script>
+
+
+    var url='';
+
+    layui.use(['element','table','upload'], function(){
+        var element = layui.element;
+        var form=layui.form;
+        var upload = layui.upload;
+
+        table = layui.table;
+        table.render({
+            elem: '#table'
+            , url: base_url + '/roomType/gerRoomTypeList'
+            , title: '客房类型表'
+            ,toolbar:true
+            , cols: [[
+                 {field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true}
+                , {field: 'subbranch', title: '所属分店', width: 100}
+                , {field: 'roomType', title: '房间类型', width: 140}
+                , {field: 'num', title: '数量', width: 120, sort: true}
+                , {field: 'capacity', title: '可容纳人数', width: 120, sort: true,edit: 'text'}
+                , {field: 'price', title: '价格',edit: 'text', width: 80}
+                , {field: 'desc', title: '描述信息', width: 300,edit: 'text'}
+                ,{field:'isrecommend', title:'是否推荐', width:110, templet: '#checkboxTpl', unresize: true}
+
+            ]]
+            , page: true
+            ,id:'dataTable'
+            ,height: 500
+
+        });
+
+        //监听单元格编辑
+        table.on('edit(test)', function(obj){
+
+            var data = obj.data;//得到所在行所有键值
+
+
+            $.ajax({
+                type:"post",
+                contentType:"application/json",
+                dataType:"json",
+                url:base_url+'/roomType/changeRoomTypeInfo',
+                data:JSON.stringify(data),
+                success:function (d) {
+
+                    if(d===1){
+                        layer.msg('修改成功')
+                    }
+
+                }
+            })
+        });
+        //处理推荐点击事件
+        form.on('checkbox(lockDemo)', function(obj){
+
+            var id=this.value;
+            var status=obj.elem.checked;
+            $.ajax({
+                type:"post",
+
+                url:base_url+'/roomType/changeRecommendStatus',
+                data:{
+                    'id':id,
+                    'status':status
+                },
+                success:function (d) {
+                    if(d===1){
+                        layer.msg('修改成功')
+                    }
+
+                }
+            })
+        });
+
+        var uploadInst = upload.render({
+            elem: '#uploader' //绑定元素
+            ,url: base_url+'/uploader' //上传接口
+            ,size: 1024*5 //限定大小
+            ,accept:'images'
+            ,done: function(res){
+
+                if(res.code==="1"){
+                    url=res.url;
+                    layer.msg('上传成功');
+                }else {
+                    layer.msg(res.msg)
+                }
+
+            }
+            ,error: function(){
+                //请求异常回调
+                layer.msg('上传失败')
+            }
+        })
+
+
+
+    });
+
+</script>
+<!--模板引擎代码-->
+<script>
+    layui.use(['laytpl','form'],function () {
+
+        var form=layui.form;
+        laytpl=layui.laytpl;
+
+        var data;
+
+        $.ajax({
+            type:"get",
+            url:base_url+'/hotel/queryAllHotel',
+
+            success:function (d) {
+
+
+                var getTpl=hotelSelectTpl.innerHTML;
+                var view = document.getElementById('selectBox');
+                laytpl(getTpl).render(d, function(html){
+                    console.log('模板')
+                    console.log(html);
+                    view.innerHTML = html;
+
+                });
+
+
+
+            }
+        });
+
+    });
+
+
+    function  createRoomType() {
+        var roomType=$('#roomType').val();
+        var subbranch=$('#selectBox').val();
+        var capacity=$('#numOfPeo').val();
+        var price=$('#price').val();
+        var desc=$('#desc').val();
+
+        if (url===''){
+            layer.msg('请上传图片');
+        } else if(roomType===''||subbranch===''||capacity===''||price===''||desc===''){
+            layer.msg('请确保表单的完整性');
+        }else {
+            $.ajax({
+                type:"post",
+
+                url:base_url+'/roomType/addRoomType',
+                data:{
+                    'roomType':roomType,
+                    'price':price,
+                    'desc':desc,
+                    'capacity':capacity,
+                    'descUrl':url,
+                    'hotelId':subbranch
+
+                },
+                success:function (d) {
+                    if(d==="1"){
+                        layer.msg('创建成功');
+                        table.reload('dataTable', {
+                            url: base_url + '/roomType/gerRoomTypeList'
+                        })
+                    }
+
+                }
+            })
+        }
+
+
+
+    };
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>客房管理</title>
+    <link rel="stylesheet" href="../../lib/layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/admin.css">
+    <link rel="stylesheet" href="../../lib/bootstrap/css/bootstrap.css">
+</head>
+<body>
+<body class="layui-layout-body" style="background-color: #f2f2f2">
+
+<div class="layui-card admin-header">
+    <div class="layui-breadcrumb" lay-fiter="breadcrumb" style="visibility: visible">
+        <a href="#">主页</a>
+        <span lay-separator="-"></span>
+        <a href="#">客房管理</a>
+    </div>
+</div>
+
+<div class="layui-fluid" style="margin-top:10px">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header ">客房管理</div>
+
+                <div style="margin-left: 20px">
+                    新建客房：
+                    <div class="layui-inline">
+                        <input class="layui-input"  id="roomId" autocomplete="off" placeholder="房间编号">
+                    </div>
+                    <div class="layui-inline">
+
+                        <select class="form-control"  style="width: 200px" id="selectBox">
+                        <option>请选择</option>
+                        </select>
+                    </div>
+                    <button class="layui-btn" onclick="addRoom()">创建</button>
+
+                </div>
+                <div class="layui-card-body">
+                    <div class="layui-col-lg10 layui-col-lg-offset1">
+                        <table class="layui-hide" id="table" lay-filter="test" ></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+
+
+<!--复选框模板-->
+<script type="text/html" id="hotelSelectTpl">
+
+    {{#  layui.each(d.hotelTypeList, function(index, item){ }}
+    <option value="{{item.id}}">{{item.roomType}}</option>
+    {{#  });
+    }}
+
+</script>
+<script type="text/html" id="checkboxTpl">
+
+    <input type="checkbox" name="lock" value="{{d.id}}" title="关闭" lay-filter="lockDemo" {{ d.status == '关闭' ? 'checked' : '' }} }}>
+</script>
+<script src="../../lib/layui/layui.js"></script>
+<script src="../../lib/jquery/jquery.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../lib/bootstrap/js/bootstrap.js"></script>
+<script>
+    layui.use(['element','table'], function(){
+        var element = layui.element;
+        var form=layui.form;
+
+        table = layui.table;
+
+        //处理关闭房间
+        form.on('checkbox(lockDemo)', function(obj){
+
+            var id=this.value;
+            var status=obj.elem.checked;
+
+            $.ajax({
+                type:"post",
+
+                url:base_url+'/room/changeRoomStatus',
+                data:{
+                    'id':id,
+                    'status':status
+
+                },
+                success:function (d) {
+                    if(d=="1"){
+                        layer.msg('修改成功');
+                        table.reload('dataTable', {
+                            url: base_url + '/room/getRoomList'
+                        })
+                    }
+
+                }
+            })
+        });
+
+
+        $.ajax({
+            type:'get',
+            url:base_url+'/user/getUserInfo',
+
+            success:function (data) {
+                var subbranchId= data.hotel;
+                console.log(subbranchId);
+                table.render({
+                    elem: '#table'
+                    , url: base_url + '/room/getRoomList'
+                    , toolbar: true
+                    , title: '客房表'
+                    , cols: [[
+                        {field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true}
+                        , {field: 'roomNo', title: '房间号', width: 140,sort: true}
+                        , {field: 'roomType', title: '房间类型', width: 140, sort: true}
+                        , {field: 'status', title: '房间状态', width: 120, sort: true}
+                        ,{field:'status', title:'是否关闭', width:110, templet: '#checkboxTpl', unresize: true}
+
+                    ]]
+                    , page: true
+                    ,id:'dataTable'
+                    , where:{
+                        subbranchId:subbranchId
+                    }
+
+                });
+            }
+        })
+
+    });
+
+
+
+    function addRoom() {
+        var roomNo=$('#roomId').val();
+        var roomTypeId=$('#selectBox').val();
+
+        if(roomNo===''||roomTypeId===''){
+            layer.msg('请确保表单的完整性');
+            return;
+        }
+
+        $.ajax({
+            type:"post",
+
+            url:base_url+'/room/addRoom',
+            data:{
+                'roomNo':roomNo,
+                'roomTypeId':roomTypeId
+
+            },
+            success:function (d) {
+                if(d=="1"){
+                    layer.msg('创建成功');
+                    table.reload('dataTable', {
+                        url: base_url + '/room/getRoomList'
+                    })
+                }else {
+                    layer.msg('创建失败')
+                }
+
+            }
+        })
+
+
+
+    }
+
+
+
+</script>
+<!--模板引擎代码-->
+<script>
+    layui.use(['laytpl','form'],function () {
+
+        var form=layui.form;
+        laytpl=layui.laytpl;
+        var data;
+
+        $.ajax({
+            type:'get',
+            url:base_url+'/user/getUserInfo',
+            success:function (data) {
+                var subbranchId= data.hotel;
+
+                $.ajax({
+                    type:"get",
+                    url:base_url+'/roomType/getRoomTypeOfSubbranch',
+                    data:{
+                        subbranchId:subbranchId
+                    },
+                    success:function (d) {
+
+                        var getTpl=hotelSelectTpl.innerHTML;
+                        var view = document.getElementById('selectBox');
+                        laytpl(getTpl).render(d, function(html){
+                            console.log('模板');
+                            console.log(html);
+                            view.innerHTML = html;
+
+                        });
+                    }
+                });
+
+            }
+        })
+
+
+    });
+
+</script>
+
+</body>
+</html>

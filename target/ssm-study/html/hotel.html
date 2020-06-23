@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>选房</title>
+
+    <!--======== All Stylesheet =========-->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/linearicons.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/responsive.css" rel="stylesheet">
+    <link rel="stylesheet" href="../lib/layui/css/layui.css">
+</head>
+
+<body>
+<!-- Header -->
+<header class="header">
+    <div class="top-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-xs-7">
+                    <ul class="list-inline social-icon">
+                        <li><i class=" fa fa-linkedin"></i></li>
+                        <li><i class=" fa fa-skype"></i></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-xs-5">
+                    <ul class="list-inline security">
+                        <li title="Login"><i class=" lnr lnr-lock"></i><a href="login.html" class="hidden-xs" style="color: #b9def0">登录</a></li>
+                        <li title="Register"><i class=" lnr lnr-pencil"></i><a href="register.html" class="hidden-xs" style="color: #b9def0">注册</a></li>
+                        <li title="Wishlist"><i class=" lnr lnr-heart"></i><a href="/html/user/userindex.html" class="hidden-xs" style="color: #b9def0">个人</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="middle-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-xs-6">
+                    <div><a class="site-title" href="index.html">连锁酒店辅助订购系统</a></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom-header">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <nav class="navbar navbar-default">
+                    <div class="container">
+                        <div class="collapse navbar-collapse" id="menu-id">
+                            <ul class="nav navbar-nav">
+
+                                <li><a href="/html/index.html">首页</a></li>
+                                <li><a href="/html/hotel.html">全部房型</a></li>
+                                <li><a href="/html/map.html">地图找店</a></li>
+                            </ul>
+                            <div class="nav-search">
+                                <form class="navbar-form navbar-right" role="search">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="请输入你的归宿"><i class="fa fa-search search-btn"></i>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+
+<!-- Feature Product -->
+<section class="feature-product">
+    <div class="grid-product">
+        <div class="container">
+            <div class="row">
+                <div class="section-title col-md-offset-3 col-md-6 col-xs-12 text-center">
+                    <h2>全部房型</h2>
+                    <small>使您满意是我们的最大追求/Your satisfaction is our greatest pursuit</small>
+                    <div class="section-border"><span class="dash"></span></div>
+                </div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-form-item layui-row">
+                    <div class="layui-inline layui-col-lg5">
+                        <label class="layui-form-label" style="width: 100px">价格范围</label>
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-mid">-</div>
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline layui-col-lg4 ">
+                        <label class="layui-form-label" style="width: 100px">入住人数</label>
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input type="text" name="" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline layui-col-lg2 ">
+                        <button class="layui-btn layui-btn-normal">查找</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row" id="view">
+                <!--所有房间-->
+                <!--使用模板引擎添加-->
+
+
+            </div>
+
+            <div class="layui-row">
+                <div id="test1" class="layui-col-lg6 layui-col-lg-offset4"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- add Two -->
+<section class="ad-2">
+    <div class="over-color">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 col-xs-12 text-center">
+                    <small>lives</small>
+                    <h2>Life can like many people, but love, only one.</h2>
+                    <p>一生中可以喜欢很多人，但心疼的，只有一个。</p>
+                    <strong>所以欢迎来睡</strong>
+                    <div><a class="btn btn-default">抢先预定</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!-- Middle footer -->
+<section class="middle-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8 col-xs-12 text-center">
+                <div>
+                    <a class="site-title" href="index.html">安<span>宁</span></a>
+                    <p class="m-f-p">这里。就是家。就是我们。在这上面有你曾经听说过的每一个人  曾经活着的  曾经死去的每一个人</p>
+                </div>
+
+                <ul class="list-inline address">
+                    <li><i class=" lnr lnr-home"></i>西南石油大学</li>
+                    <li><i class=" lnr lnr-envelope"></i>swpu@163.com</li>
+                    <li><i class=" lnr lnr-phone-handset"></i>96005900</li>
+                </ul>
+
+                <!--a type="button" class="btn btn-default" data-toggle="modal" data-target=".popup">Small modal</a-->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- bottom footer -->
+<footer class="bottom-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6 col-xs-12 text-center">
+                <p>西南石油大学倾情奉献</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+
+<!--======== All Javascript =========-->
+<script src="../js/jquery-2.1.1.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../lib/layui/layui.js">  </script>
+<script src="../js/common.js"></script>
+
+<!--模板-->
+<script type="text/html" id="tipTpl">
+
+
+    {{#  layui.each(d.tipList, function(index, item){ }}
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="single-grid">
+            <div class="grid-img">
+                <!--背景图片-->
+                <img class="img-resposive" src="{{item.descUrl}}" alt="women" />
+                <div class="grid-overlay">
+                    <ul>
+                        <li onclick="getInfo('{{item.hotelName}}','{{item.desc}}','{{item.capacity}}')"><i class="lnr lnr-book"></i></li>
+                        <li onclick="makeOrder({{item.id}})"><i class="lnr lnr-cart"></i></li>
+                    </ul>
+                </div>
+            </div>
+            <h3><i id="roomType">{{item.roomType}}</i><span id="price">{{item.price}}</span></h3>
+            <p id="roomMsg">{{item.desc}}</p>
+        </div>
+    </div>
+    {{#  }); }}
+</script>
+
+<!--脚本-->
+<script>
+
+    layui.use(['laytpl','form','laypage'],function () {
+
+        var form=layui.form;
+        laytpl=layui.laytpl;
+        var laypage = layui.laypage;
+
+        $.ajax({
+            type:'get',
+            url:base_url+'/view/getRoomTypeCount',
+            success:function (data) {
+                laypage.render({
+                    elem: 'test1'
+                    ,count: data
+                    ,jump: function(obj, first){
+
+                            $.ajax({
+                                type:'get',
+                                data:{
+                                    page:obj.curr,
+                                    limit:12
+                                },
+                                url:base_url+'/view/getAllRoomType',
+                                success:function (data) {
+                                    var getTpl=tipTpl.innerHTML;
+                                    var view = document.getElementById('view');
+                                    laytpl(getTpl).render(data, function(html){
+                                        console.log(html);
+                                        view.innerHTML = html;
+
+                                    });
+
+                                }
+                            })
+                        }
+
+
+                });
+            }
+        });
+
+
+
+
+
+    });
+
+
+
+    function getInfo(hotelName,desc,capacity) {
+        layer.open({
+            title:'房间信息',
+            type: 1,
+            area: ['500px', '300px'],
+            content: '所属分店:'+hotelName+'<br/>'+'房间信息:'+desc+'<br/>'+'可入住人数:'+capacity
+
+        });
+    }
+
+    function makeOrder(hoteTypeId) {
+        layer.open({
+            title:'订购时间',
+            type: 2,
+            area: ['500px', '600px'],
+            content: base_url+'/html/order.html?hoteTypteId='+hoteTypeId
+
+        });
+    }
+
+</script>
+</html>

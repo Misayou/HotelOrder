@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.core.mapper.RoomMapper">
+
+    <select id="queryRoomList" resultType="roomInfo">
+       select r.id ,r.room_no, r.status, t.room_type  from room  as r inner join room_type as t where r.room_type_id=t.id and t.hotel_id=#{2}
+       order by r.id limit #{0},#{1}
+    </select>
+
+    <select id="queryRoomNumOfSubBranch" resultType="int">
+        select count(*) from room as r inner join  room_type as t where r.room_type_id=t.id and t.hotel_id=#{0}
+    </select>
+
+    <select id="queryByRoomNo" resultType="int">
+        select count(*) from room where room_no=#{0} and room_type_id=#{1}
+    </select>
+
+    <insert id="insertRoom" parameterType="room">
+        insert into room (room_no, status, room_type_id) values (#{roomNo},'正常使用',#{roomTypeId})
+    </insert>
+
+    <update id="updateRoomStatus">
+        update room set status=#{1} where id=#{0}
+    </update>
+
+    <select id="qurryRoomByRoomNo" parameterType="string" resultType="room">
+        select * from `room` where room_no = #{0}
+    </select>
+
+    <select id="querytRoomByType" resultType="room">
+        select * from room where room_type_id=#{0}
+    </select>
+</mapper>
